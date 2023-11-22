@@ -6,18 +6,21 @@ const userRoute = require('./routes/userRoute.js')
 const bodyParser = require('body-parser')
 const morgan = require('morgan');
 const cookieParser = require("cookie-parser");
-const fileUpload = require("express-fileupload");
-
+const cors = require('cors')
+const {fileURLToPath} = require("url");
 
 dotenv.config()
 
+app.use(cors(
+   { origin: 'http://localhost:3000', 
+    credentials: true }
+));
 app.use(express.json())
 app.use(morgan("dev"))
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(fileUpload());
 
-app.use('/api/v1',userRoute);
+app.use('/api/v1/user',userRoute);
 
 app.get('/',(req,res)=>{
     res.send({
